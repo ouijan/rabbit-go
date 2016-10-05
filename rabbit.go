@@ -21,7 +21,11 @@ func check(e error) {
  * Config Struct
  */
 type Config struct {
-  commands []string `yaml:",flow"`
+  Commands []struct {
+  	Hop string
+  	To string
+  	Description string
+  }
 }
 
 /**
@@ -32,11 +36,11 @@ func main() {
 
 	// Read Yaml
 	config := Config{}
-	data, err := ioutil.ReadFile("test.yaml")
+	data, err := ioutil.ReadFile("rabbit.yaml")
   check(err)
-  err = yaml.Unmarshal([]byte(data), &config)
+  err = yaml.Unmarshal(data, &config)
   check(err)
-  fmt.Printf("--- config:\n%v\n\n", config)
+  fmt.Printf("%v\n", config)
 	
 	// Handle Reserved Commands
 	
