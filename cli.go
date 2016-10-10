@@ -1,8 +1,8 @@
-package main
+package rabbit
 
 /**
  * Main Function
  */
 func main() {
-	rabbit()
+	rabbit("")
 }
