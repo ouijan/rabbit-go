@@ -1,19 +1,22 @@
-package rabbit
+package main
 
 import (
-	"fmt"
+	"io/ioutil"
+	"gopkg.in/yaml.v2"
 )
 
-func rabbit(input string) {
-	fmt.Printf("Rabbit Command Line Hopper\n\n")
-
-  // load Commands
-  config := Config{}
-  config.Load()
-  config.Help()
-	
-	// Handle Reserved Commands
-	// Build Commands
-	// Determine Command
-	// Run Command
+type Rabbit struct {
+  Commands []Command
 }
+
+func (rabbit *Rabbit) Load() {
+	data, err := ioutil.ReadFile("rabbit.yaml")
+	if err != nil { 
+		panic(err)
+	}
+	err = yaml.Unmarshal(data, &rabbit)
+	if err != nil {
+		panic(err)
+	}
+}
+
