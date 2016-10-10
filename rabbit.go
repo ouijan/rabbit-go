@@ -10,7 +10,7 @@ import (
  * Main Function
  */
 func rabbit() {
-	fmt.Printf("Rabbit Command Line Hopper\n")
+	fmt.Printf("Rabbit Command Line Hopper\n\n")
 
 	// Read Yaml
 	config := Config{}
@@ -18,7 +18,7 @@ func rabbit() {
 
 
   // Build Commands
-  fmt.Printf("%s \n", config.Commands)
+  config.Help()
   // for index, command := range config.Commands {
   	// fmt.Printf("%i: %s", index, command)
 	// }

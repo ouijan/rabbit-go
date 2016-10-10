@@ -19,3 +19,9 @@ func (config *Config) Load() {
 		panic(err)
 	}
 }
+
+func (config *Config) Help() {
+	for _, command := range config.Commands {
+		command.Help()
+	}
+}
