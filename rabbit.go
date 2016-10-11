@@ -20,3 +20,15 @@ func (rabbit *Rabbit) Load() {
 	}
 }
 
+func (rabbit *Rabbit) Find(args []string) []Command {
+	var matches []Command
+
+	for _, command := range rabbit.Commands {
+		if (command.Matches(args)) {
+			matches = append(matches, command)
+		}
+	}
+
+	return matches
+}
+

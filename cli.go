@@ -12,17 +12,24 @@ func main() {
 	rabbit := Rabbit{}
 	rabbit.Load()
 
-	fmt.Println("Rabbit Command Line Hopper \n")
-	help(rabbit)
+	fmt.Println("Rabbit Command Line Hopper")
 	
-	arguments := os.Args[1:]
-	fmt.Println(arguments)
+	args := os.Args[1:]
+	matches := rabbit.Find(args)
+
+	// If theres one run it
+	if (len(matches) == 1) {
+		matches[0].Run()
+		return 
+	}
+
+	// If multiple print help
+	help(matches)
+	// If theres none display help for all
 }
 
-
-
-func help(rabbit Rabbit) {
-	for _, command := range rabbit.Commands {
+func help(commands []Command) {
+	for _, command := range commands {
 		printCommand(command);
 	}
 }
