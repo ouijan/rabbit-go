@@ -19,8 +19,13 @@ func (command *Command) String() string {
 
 func (command *Command) Matches(args []string) bool {
 	hopArray := strings.Split(command.Hop, " ")
-	for i, arg := range args {
-		if (arg != hopArray[i]) {
+	// Check there is enough args to be this Command
+	if (len(hopArray) > len(args)) {
+		return false
+	}
+	// Return false if any arg doesn't match
+	for i, arg := range hopArray {
+		if (arg != args[i]) {
 			return false
 		}	
 	}

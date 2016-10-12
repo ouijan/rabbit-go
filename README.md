@@ -2,5 +2,12 @@
 Go Port
 
 ## Known Issues
-- Command.Matches only performs partial match (eg, Hop: 'ping google' is found when 'ping' is entered)
-- 
+
+
+
+### Match Values
+Hop 			Args
+[1,2,3]	: [1,2,3]	Exact
+[1,2]		:	[1,2,3]	Exact (Unless Better Match)
+[1,2,3]	:	[1,2] 	Partial
+[1,2]		:	[1,3]		None

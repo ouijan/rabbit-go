@@ -13,19 +13,20 @@ func main() {
 	rabbit.Load()
 
 	fmt.Println("Rabbit Command Line Hopper")
-	
 	args := os.Args[1:]
 	matches := rabbit.Find(args)
-
 	// If theres one run it
 	if (len(matches) == 1) {
 		matches[0].Run()
 		return 
-	}
-
+	} 
 	// If multiple print help
-	help(matches)
+	if (len(matches) > 1) {
+		help(matches)
+		return
+	}
 	// If theres none display help for all
+	help(rabbit.Commands)
 }
 
 func help(commands []Command) {
