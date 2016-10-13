@@ -20,8 +20,12 @@ func main() {
 
 	// If one executable command run it
 	if (len(exectuables) == 1) {
-		matches[0].Run(args)
-		return 
+		err := matches[0].Run(args)
+		if (err != nil) {
+			os.Exit(1)
+			return 
+		}
+		return
 	} 
 
 	// If multiple matches print help

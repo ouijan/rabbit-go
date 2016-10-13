@@ -63,7 +63,7 @@ func (command *Command) IsExecutable(args []string) bool {
 }
 
 // Run is used to execute the 'To' command
-func (command *Command) Run(args []string) {
+func (command *Command) Run(args []string) error {
 
 	// Build Executed args
 	execArgs := command.toArray()
@@ -76,5 +76,5 @@ func (command *Command) Run(args []string) {
   cmd.Stderr = os.Stderr
 
   // Run Command
-  cmd.Run()
+  return cmd.Run()
 }
