@@ -12,14 +12,11 @@ func main() {
 	rabbit := Rabbit{}
 	rabbit.Load("rabbit.yaml")
 
-	fmt.Println("Rabbit Command Line Hopper")
+	fmt.Println("Rabbit Command Line Hopper\n")
 	args := os.Args[1:]
 	matches := rabbit.Find(args)
-
+	// matches = matches.FilterExecutables(args)
 	help(matches);
-	// for _, cmd := range matches {
-	// 	fmt.Println(cmd.Hop)
-	// }
 	return
 
 	// If theres one run it

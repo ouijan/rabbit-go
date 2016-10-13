@@ -18,3 +18,16 @@ func (commands *Commands) SortByMatch(args []string) Commands {
 
 	return matches[strongest]
 }
+
+// FilterExecutables returns list of only executable commands
+func (commands *Commands) FilterExecutables(args []string) Commands {	
+	var executables Commands
+
+	for _, command := range *commands {
+		if (command.IsExecutable(args)) {
+			executables = append(executables, command)
+		}
+	}
+
+	return executables
+}
