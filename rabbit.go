@@ -5,12 +5,14 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Main application class
 type Rabbit struct {
-  Commands []Command
+  Commands Commands
 }
 
-func (rabbit *Rabbit) Load() {
-	data, err := ioutil.ReadFile("rabbit.yaml")
+// Load builds the commands from the given file
+func (rabbit *Rabbit) Load(path string) {
+	data, err := ioutil.ReadFile(path)
 	if err != nil { 
 		panic(err)
 	}
@@ -20,15 +22,7 @@ func (rabbit *Rabbit) Load() {
 	}
 }
 
-func (rabbit *Rabbit) Find(args []string) []Command {
-	var matches []Command
-
-	for _, command := range rabbit.Commands {
-		if (command.Matches(args)) {
-			matches = append(matches, command)
-		}
-	}
-
-	return matches
+// Find determines the best matches for the given args
+func (rabbit *Rabbit) Find(args []string) Commands {
+	return rabbit.Commands.SortByMatch(args)
 }
-
