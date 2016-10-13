@@ -14,18 +14,17 @@ func main() {
 
 	fmt.Println("Rabbit Command Line Hopper\n")
 	args := os.Args[1:]
-	matches := rabbit.Find(args)
-	// matches = matches.FilterExecutables(args)
-	help(matches);
-	return
 
-	// If theres one run it
-	if (len(matches) == 1) {
-		matches[0].Run()
+	matches := rabbit.Find(args)
+	exectuables := matches.FilterExecutables(args)
+
+	// If one executable command run it
+	if (len(exectuables) == 1) {
+		matches[0].Run(args)
 		return 
 	} 
 
-	// If multiple print help
+	// If multiple matches print help
 	if (len(matches) > 1) {
 		help(matches)
 		return

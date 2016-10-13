@@ -24,6 +24,11 @@ func (command *Command) hopArray() []string {
 	return strings.Split(command.Hop, " ")
 }
 
+// toArray returns the array of hop arguments
+func (command *Command) toArray() []string {
+	return strings.Split(command.To, " ")
+}
+
 // MatchStrength calculates how well this command matches the given args
 func (command *Command) MatchStrength(args []string) int {
 	strength := 0
@@ -58,9 +63,18 @@ func (command *Command) IsExecutable(args []string) bool {
 }
 
 // Run is used to execute the 'To' command
-func (command *Command) Run() {
-	cmd := exec.Command("echo", "Command", "Run", "'" + command.Hop + "'")
+func (command *Command) Run(args []string) {
+
+	// Build Executed args
+	execArgs := command.toArray()
+	appendArgs := args[len(command.hopArray()):]
+	execArgs = append(execArgs, appendArgs...)
+
+	// Build Command
+	cmd := exec.Command(execArgs[0], execArgs[1:]...)
   cmd.Stdout = os.Stdout
   cmd.Stderr = os.Stderr
+
+  // Run Command
   cmd.Run()
 }
