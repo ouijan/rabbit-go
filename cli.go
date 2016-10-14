@@ -19,9 +19,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	
 	args := os.Args[1:]
-
 	matches := rabbit.Find(args)
 	exectuables := matches.FilterExecutables(args)
 
@@ -35,14 +33,11 @@ func main() {
 		return
 	} 
 
-	// If multiple matches print help
-	if (len(matches) > 1) {
-		help(matches)
-		return
+	// If no matches, match everything
+	if (len(matches) <= 0) {
+		matches = rabbit.Commands
 	}
-
-	// If theres none display help for all
-	help(rabbit.Commands)
+	help(matches)
 }
 
 // help prints the commands given
