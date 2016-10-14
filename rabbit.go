@@ -11,15 +11,13 @@ type Rabbit struct {
 }
 
 // Load builds the commands from the given file
-func (rabbit *Rabbit) Load(path string) {
+func (rabbit *Rabbit) Load(path string) error {
 	data, err := ioutil.ReadFile(path)
 	if err != nil { 
-		panic(err)
+		return err
 	}
 	err = yaml.Unmarshal(data, &rabbit)
-	if err != nil {
-		panic(err)
-	}
+	return err
 }
 
 // Find determines the best matches for the given args

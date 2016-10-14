@@ -1,35 +1,14 @@
-# Contains a list of available commands
 commands:
+  - hop: build
+    to: go install github.com/ouijan/rabbit
+    description: Builds and installs this package
 
-  # Hello Command
-  # Type 'rabbit hello' into a command line when in the directory 
-  # with this rabbit.yaml. It will cause the 'to' property to 
-  # be called: in this case it will run 'echo hello world' in 
-  # the terminal.
   - hop: hello
-    # to: the command that is triggered
     to: echo hello world
-    # description: displayed in the help page. 
-    # Provides information about this command
-    description: prints 'hello world' to the command line
-  
-  # Ping Command
-  # Type 'rabbit ping' into a command line when in the directory 
-  # with this rabbit.yaml.
-  - hop: ping google
-    to: ping www.google.com
-    description: starts pinging www.google.com
-
-  # Node Command
-  # Type 'rabbit node' into a command line when in the directory 
-  # with this rabbit.yaml.
-  - hop: node
-    to: docker run -it --rm node
-    description: opens an interactive node cli in a docker container. Requires Docker
-
-
-  
   - hop: hello there
     to: echo hello there
+
+  - hop: ping google
+    to: ping www.google.com
   - hop: ping apple
     to: ping www.apple.com

@@ -9,10 +9,17 @@ import (
  * Main Function
  */
 func main() {
-	rabbit := Rabbit{}
-	rabbit.Load("rabbit.yaml")
+	fmt.Println("Rabbit Command Line Hopper")
+	configFile := "rabbit.yaml";
 
-	fmt.Println("Rabbit Command Line Hopper\n")
+	rabbit := Rabbit{}
+	err := rabbit.Load(configFile)
+	if (err != nil) {
+		fmt.Println("Missing " + configFile + " config file")
+		os.Exit(1)
+	}
+
+	
 	args := os.Args[1:]
 
 	matches := rabbit.Find(args)
