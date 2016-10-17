@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	// "os/exec"
-	// "os"
+	"os/exec"
+	"os"
 	"strings"
-	// "github.com/urfave/cli"
 )
 
 /**
@@ -42,24 +41,16 @@ func (command *Command) toArray() []string {
 /**
  * Run is used to execute the 'To' command
  */
-func (command *Command) Run() error {
-	// args := context.Args()
-	
-	fmt.Println("Run: " + command.Hop)
-
+func (command *Command) Run(args []string) error {
 	// Build Executed args
-	// execArgs := command.toArray()
-	// execArgs = append(execArgs, args...)
-
-	// fmt.Println(args)
-	// fmt.Println(execArgs)
+	execArgs := command.toArray()
+	execArgs = append(execArgs, args...)
 
 	// Build Command
-	// cmd := exec.Command(execArgs[0], execArgs[1:]...)
-  // cmd.Stdout = os.Stdout
-  // cmd.Stderr = os.Stderr
+	cmd := exec.Command(execArgs[0], execArgs[1:]...)
+  cmd.Stdout = os.Stdout
+  cmd.Stderr = os.Stderr
 
   // Run Command
-  // return cmd.Run()
-  return nil
+  return cmd.Run()
 }

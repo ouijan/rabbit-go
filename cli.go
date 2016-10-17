@@ -52,11 +52,9 @@ func getDynamicCommands() []cli.Command {
 
 func buildCommands(commandList []Command) []cli.Command {
   commands := []cli.Command{}
-
   for _, data := range commandList {
     commands = append(commands, buildCommand(data))
   }
-
   return commands
 }
 
@@ -66,8 +64,11 @@ func buildCommand(data Command) cli.Command {
   command.Usage = data.Description
   command.Subcommands = buildCommands(data.Commands)
   command.Action = func(c *cli.Context) error {
-    data.Run()
-    fmt.Println("Run: " + data.Hop)
+    args := []string {}
+    for _, arg := range c.Args() {
+      args = append(args, arg)
+    }
+    data.Run(args)
     return nil
   }
   return command  
