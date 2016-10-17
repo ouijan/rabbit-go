@@ -3,56 +3,72 @@ package main
 import (
 	"os"
 	"fmt"
+  "github.com/urfave/cli"
 )
 
 /**
  * Main Function
  */
 func main() {
-	fmt.Println("Rabbit Command Line Hopper")
-	configFile := "rabbit.yaml";
+	app := cli.NewApp()
+	setDetails(app)
 
-	rabbit := Rabbit{}
-	err := rabbit.Load(configFile)
-	if (err != nil) {
-		fmt.Println("Missing " + configFile + " config file")
-		os.Exit(1)
-	}
-
-	args := os.Args[1:]
-	matches := rabbit.Find(args)
-	exectuables := matches.FilterExecutables(args)
-
-	// If one executable command run it
-	if (len(exectuables) == 1) {
-		err := matches[0].Run(args)
-		if (err != nil) {
-			os.Exit(1)
-			return 
-		}
-		return
-	} 
-
-	// If no matches, match everything
-	if (len(matches) <= 0) {
-		matches = rabbit.Commands
-	}
-	help(matches)
+  commands := []cli.Command{}
+  commands = append(commands, getStaticCommands()...)
+  commands = append(commands, getDynamicCommands()...)
+  
+  app.Commands = commands
+  app.Run(os.Args);
 }
 
-// help prints the commands given
-func help(commands []Command) {
-	for _, command := range commands {
-		printCommand(command);
-	}
+func setDetails(app *cli.App) {
+	app.Name = "Rabbit"
+	app.Version = "0.0.0"
+  app.Usage = "Command Line Hopper"
 }
 
-// printCommand prints the given command
-func printCommand (command Command) {
-	fmt.Printf("Hop: %s \n", command.Hop)
-	fmt.Printf("To: %s \n", command.To)
-	if (command.Description != "") {
-		fmt.Printf("Description: %s \n", command.Description)
-	}
-	fmt.Printf("\n")
+func getStaticCommands() []cli.Command {
+  commands := []cli.Command{}
+	commands = append(commands, getInitCommand())
+  return commands;
+}
+
+func getInitCommand() cli.Command {
+  return cli.Command{
+    Name: "init",
+    Usage: "Create a rabbit.yaml file in the current directory",
+    Action: func(c *cli.Context) error {
+      fmt.Println("Init run: create file")
+      return nil
+    },
+  }
+}
+
+func getDynamicCommands() []cli.Command {
+  config := Config{}
+  config.Load("rabbit.yaml")
+  return buildCommands(config.Commands)
+}
+
+func buildCommands(commandList []Command) []cli.Command {
+  commands := []cli.Command{}
+
+  for _, data := range commandList {
+    commands = append(commands, buildCommand(data))
+  }
+
+  return commands
+}
+
+func buildCommand(data Command) cli.Command {
+  command := cli.Command{}
+  command.Name = data.Hop
+  command.Usage = data.Description
+  command.Subcommands = buildCommands(data.Commands)
+  command.Action = func(c *cli.Context) error {
+    data.Run()
+    fmt.Println("Run: " + data.Hop)
+    return nil
+  }
+  return command  
 }

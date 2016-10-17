@@ -1,14 +1,24 @@
 commands:
+
   - hop: build
     to: go install github.com/ouijan/rabbit
     description: Builds and installs this package
-
+  
   - hop: hello
     to: echo hello world
-  - hop: hello there
-    to: echo hello there
+    description: Print 'hello world' to terminal
+    commands: 
+    - hop: there
+      to: echo hello there
+      description: Print 'hello there' to terminal
 
-  - hop: ping google
-    to: ping www.google.com
-  - hop: ping apple
-    to: ping www.apple.com
+  - hop: ping
+    to: ping
+    description: ping a server
+    commands:
+    - hop: google
+      to: ping www.google.com
+      description: ping google
+    - hop: apple
+      to: ping www.apple.com
+      description: ping apple
